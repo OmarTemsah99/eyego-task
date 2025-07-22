@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { AppDispatch, RootState } from "@/store/store";
 import {
   setIssues,
@@ -10,6 +11,8 @@ import {
   setPage,
   Issue,
 } from "@/store/issuesSlice";
+import StatusBadge from "./StatusBadge";
+import Pagination from "./Pagination";
 
 export default function IssuesTable({
   initialIssues,
@@ -79,7 +82,7 @@ export default function IssuesTable({
                 {issue.title}
               </td>
               <td className="border border-gray-700 px-4 py-2 text-gray-200">
-                {issue.status}
+                <StatusBadge status={issue.status} />
               </td>
             </tr>
           ))}
@@ -87,21 +90,12 @@ export default function IssuesTable({
       </table>
 
       {/* Pagination */}
-      <div className="mt-4 flex justify-center gap-4">
-        <button
-          disabled={page === 1}
-          onClick={() => dispatch(setPage(page - 1))}
-          className="px-3 py-1 bg-gray-600 text-white rounded disabled:opacity-50">
-          Prev
-        </button>
-        <span className="text-white">Page {page}</span>
-        <button
-          disabled={page * perPage >= filtered.length}
-          onClick={() => dispatch(setPage(page + 1))}
-          className="px-3 py-1 bg-gray-600 text-white rounded disabled:opacity-50">
-          Next
-        </button>
-      </div>
+      <Pagination
+        page={page}
+        perPage={perPage}
+        total={filtered.length}
+        onPageChange={(newPage) => dispatch(setPage(newPage))}
+      />
     </div>
   );
 }
