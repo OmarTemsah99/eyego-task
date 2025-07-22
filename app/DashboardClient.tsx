@@ -13,14 +13,22 @@ import {
   Cell,
 } from "recharts";
 import { ClipboardList, TrendingUp, Clock, CheckCircle } from "lucide-react";
+import StatusBadge from "./issues/StatusBadge";
 import Link from "next/link";
-import { IssueWithStringDates, DashboardData } from "./Dashboard";
+import { IssueWithStringDates, DashboardData } from "./dashboardTypes";
 
 // Types
 type StatusCount = {
   status: string;
   count: number;
   color: string;
+};
+
+type MonthlyChartData = {
+  month: string;
+  open: number;
+  inProgress: number;
+  closed: number;
 };
 
 // Helper functions
@@ -37,7 +45,7 @@ const getStatusCounts = (issues: IssueWithStringDates[]): StatusCount[] => {
   ];
 };
 
-const getMonthlyData = (issues: IssueWithStringDates[]) => {
+const getMonthlyData = (issues: IssueWithStringDates[]): MonthlyChartData[] => {
   const monthlyData = issues.reduce((acc, issue) => {
     const month = new Date(issue.createdAt).toLocaleDateString("en-US", {
       month: "short",
@@ -53,7 +61,7 @@ const getMonthlyData = (issues: IssueWithStringDates[]) => {
     else if (issue.status === "CLOSED") acc[month].closed++;
 
     return acc;
-  }, {} as Record<string, any>);
+  }, {} as Record<string, MonthlyChartData>);
 
   return Object.values(monthlyData).slice(-6); // Last 6 months
 };
@@ -66,33 +74,8 @@ const formatDate = (dateString: string) => {
   });
 };
 
-const getStatusBadgeClass = (status: string) => {
-  switch (status) {
-    case "OPEN":
-      return "bg-red-900/50 text-red-300 border border-red-700";
-    case "IN_PROGRESS":
-      return "bg-yellow-900/50 text-yellow-300 border border-yellow-700";
-    case "CLOSED":
-      return "bg-green-900/50 text-green-300 border border-green-700";
-    default:
-      return "bg-gray-900/50 text-gray-300 border border-gray-700";
-  }
-};
-
-const getStatusLabel = (status: string) => {
-  switch (status) {
-    case "OPEN":
-      return "Open";
-    case "IN_PROGRESS":
-      return "In Progress";
-    case "CLOSED":
-      return "Closed";
-    default:
-      return status;
-  }
-};
-
 // Stats Card Component
+import { LucideIcon } from "lucide-react";
 const StatsCard = ({
   title,
   value,
@@ -102,7 +85,7 @@ const StatsCard = ({
 }: {
   title: string;
   value: number;
-  icon: any;
+  icon: LucideIcon;
   color: string;
   bgColor: string;
 }) => (
@@ -151,7 +134,7 @@ const StatusPieChart = ({ data }: { data: StatusCount[] }) => (
   </div>
 );
 
-const MonthlyBarChart = ({ data }: { data: any[] }) => (
+const MonthlyBarChart = ({ data }: { data: MonthlyChartData[] }) => (
   <div className="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg">
     <h3 className="text-lg font-semibold text-slate-100 mb-6">
       Issues Over Time
@@ -210,12 +193,7 @@ const RecentIssues = ({ issues }: { issues: IssueWithStringDates[] }) => (
                 <span className="text-slate-400 text-sm font-mono">
                   #{issue.id}
                 </span>
-                <span
-                  className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusBadgeClass(
-                    issue.status
-                  )}`}>
-                  {getStatusLabel(issue.status)}
-                </span>
+                <StatusBadge status={issue.status} />
               </div>
               <h4 className="text-slate-100 font-medium truncate">
                 {issue.title}

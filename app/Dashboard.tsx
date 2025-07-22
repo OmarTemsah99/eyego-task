@@ -1,26 +1,7 @@
 import { prisma } from "@/prisma/client";
 import DashboardClient from "./DashboardClient";
-
-// Types
-export type IssueWithStringDates = {
-  id: number;
-  title: string;
-  status: "OPEN" | "IN_PROGRESS" | "CLOSED";
-  createdAt: string;
-  updatedAt: string;
-  description?: string;
-  assignedToUserId?: string | null;
-};
-
-export type DashboardData = {
-  issues: IssueWithStringDates[];
-  stats: {
-    total: number;
-    open: number;
-    inProgress: number;
-    closed: number;
-  };
-};
+import { IssueWithStringDates, DashboardData } from "./dashboardTypes";
+import { calculateStats } from "./dashboardUtils";
 
 // Main Dashboard Server Component
 export default async function Dashboard() {
@@ -43,13 +24,7 @@ export default async function Dashboard() {
     }));
 
     // Calculate stats
-    const stats = {
-      total: issues.length,
-      open: issues.filter((issue) => issue.status === "OPEN").length,
-      inProgress: issues.filter((issue) => issue.status === "IN_PROGRESS")
-        .length,
-      closed: issues.filter((issue) => issue.status === "CLOSED").length,
-    };
+    const stats = calculateStats(issues);
 
     const dashboardData: DashboardData = {
       issues,
