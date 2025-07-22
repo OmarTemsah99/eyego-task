@@ -21,7 +21,12 @@ export default function IssuesTable({
     useSelector((state: RootState) => state.issue);
 
   useEffect(() => {
-    dispatch(setIssues(initialIssues));
+    const normalized = initialIssues.map((issue) => ({
+      ...issue,
+      createdAt: new Date(issue.createdAt).toISOString(),
+      updatedAt: new Date(issue.updatedAt).toISOString(),
+    }));
+    dispatch(setIssues(normalized));
   }, [initialIssues, dispatch]);
 
   const filtered = issues.filter(

@@ -4,6 +4,8 @@ export type Issue = {
   id: number;
   title: string;
   status: "OPEN" | "IN_PROGRESS" | "CLOSED";
+  createdAt: string;
+  updatedAt: string;
 };
 
 type State = {
