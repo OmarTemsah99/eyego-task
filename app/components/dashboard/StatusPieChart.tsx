@@ -2,18 +2,22 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { StatusCount } from "../../helpers/dashboardHelpers";
 import type { Issue } from "@/store/issuesSlice";
 
-import type { TooltipProps } from "recharts";
-
 type StatusTooltipPayload = {
   status: Issue["status"];
   count: number;
   color: string;
 };
 
-const CustomTooltip = (props: TooltipProps<number, string>) => {
-  const { active, payload } = props;
+type CustomTooltipProps = {
+  active?: boolean;
+  payload?: Array<{
+    payload: StatusTooltipPayload;
+  }>;
+};
+
+const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
-    const { status, count, color } = payload[0].payload as StatusTooltipPayload;
+    const { status, count, color } = payload[0].payload;
     return (
       <div
         className="p-3 rounded-lg border border-slate-600 bg-slate-700 shadow-md text-slate-100"
