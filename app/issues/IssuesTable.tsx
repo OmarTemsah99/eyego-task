@@ -67,7 +67,11 @@ export default function IssuesTable({
             </label>
             <StatusFilterDropdown
               value={filterStatus}
-              onChange={(val) => dispatch(setFilter(val as any))}
+              onChange={(val) =>
+                dispatch(
+                  setFilter(val as "ALL" | "OPEN" | "IN_PROGRESS" | "CLOSED")
+                )
+              }
             />
           </div>
 
