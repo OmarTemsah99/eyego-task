@@ -26,13 +26,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-[var(--background)] text-[var(--foreground)]`}>
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-slate-900 text-slate-100`}>
         <ReduxProvider>
           <AuthProvider>
-            <Navbar />
-            {children}
+            <div className="min-h-screen bg-slate-900">
+              <Navbar />
+              <main className="bg-slate-900 min-h-screen">{children}</main>
+            </div>
           </AuthProvider>
         </ReduxProvider>
       </body>

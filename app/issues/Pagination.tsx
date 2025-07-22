@@ -1,4 +1,5 @@
 import React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface PaginationProps {
   page: number;
@@ -81,16 +82,7 @@ export default function Pagination({
                      hover:bg-slate-600 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-500 
                      disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-slate-700 
                      transition-all duration-200">
-            <svg
-              className="w-4 h-4 mr-1"
-              fill="currentColor"
-              viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <ChevronLeft className="w-4 h-4 mr-1" />
             Previous
           </button>
 
@@ -131,16 +123,7 @@ export default function Pagination({
                      disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-slate-700 
                      transition-all duration-200">
             Next
-            <svg
-              className="w-4 h-4 ml-1"
-              fill="currentColor"
-              viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <ChevronRight className="w-4 h-4 ml-1" />
           </button>
         </div>
       </div>

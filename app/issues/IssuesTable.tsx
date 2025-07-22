@@ -2,6 +2,12 @@
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  ClipboardList,
+  ChevronUp,
+  ChevronDown,
+  ChevronsUpDown,
+} from "lucide-react";
 
 import { AppDispatch, RootState } from "@/store/store";
 import {
@@ -13,6 +19,7 @@ import {
 } from "@/store/issuesSlice";
 import StatusBadge from "./StatusBadge";
 import Pagination from "./Pagination";
+import StatusFilterDropdown from "../components/StatusFilterDropdown";
 
 export default function IssuesTable({
   initialIssues,
@@ -47,18 +54,7 @@ export default function IssuesTable({
       <div className="bg-gradient-to-r from-slate-800 to-slate-700 rounded-xl p-6 shadow-2xl border border-slate-600">
         <h1 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
           <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-            <svg
-              className="w-5 h-5 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-              />
-            </svg>
+            <ClipboardList className="w-5 h-5 text-white" />
           </div>
           Issues Dashboard
         </h1>
@@ -69,17 +65,10 @@ export default function IssuesTable({
             <label className="text-sm font-medium text-slate-300">
               Filter by Status:
             </label>
-            <select
-              onChange={(e) => dispatch(setFilter(e.target.value as any))}
+            <StatusFilterDropdown
               value={filterStatus}
-              className="bg-slate-700 border border-slate-600 text-white px-4 py-2.5 rounded-lg 
-                       focus:ring-2 focus:ring-blue-500 focus:border-transparent 
-                       hover:bg-slate-600 transition-all duration-200 cursor-pointer">
-              <option value="ALL">All Issues</option>
-              <option value="OPEN">Open</option>
-              <option value="IN_PROGRESS">In Progress</option>
-              <option value="CLOSED">Closed</option>
-            </select>
+              onChange={(val) => dispatch(setFilter(val as any))}
+            />
           </div>
 
           <div className="text-sm text-slate-400 bg-slate-700/50 px-3 py-1.5 rounded-full">
@@ -112,39 +101,12 @@ export default function IssuesTable({
                       <div className="flex flex-col">
                         {sortKey === col.key ? (
                           sortOrder === "asc" ? (
-                            <svg
-                              className="w-4 h-4 text-blue-400"
-                              fill="currentColor"
-                              viewBox="0 0 20 20">
-                              <path
-                                fillRule="evenodd"
-                                d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
+                            <ChevronUp className="w-4 h-4 text-blue-400" />
                           ) : (
-                            <svg
-                              className="w-4 h-4 text-blue-400"
-                              fill="currentColor"
-                              viewBox="0 0 20 20">
-                              <path
-                                fillRule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
+                            <ChevronDown className="w-4 h-4 text-blue-400" />
                           )
                         ) : (
-                          <svg
-                            className="w-4 h-4 text-slate-500"
-                            fill="currentColor"
-                            viewBox="0 0 20 20">
-                            <path
-                              fillRule="evenodd"
-                              d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
+                          <ChevronsUpDown className="w-4 h-4 text-slate-500" />
                         )}
                       </div>
                     </div>
@@ -159,18 +121,7 @@ export default function IssuesTable({
                     colSpan={3}
                     className="px-6 py-12 text-center text-slate-400">
                     <div className="flex flex-col items-center gap-3">
-                      <svg
-                        className="w-12 h-12 text-slate-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                        />
-                      </svg>
+                      <ClipboardList className="w-12 h-12 text-slate-500" />
                       <div>
                         <div className="text-lg font-medium text-slate-300">
                           No issues found

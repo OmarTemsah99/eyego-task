@@ -1,26 +1,95 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0f172a; /* slate-900 */
+  --foreground: #f1f5f9; /* slate-100 */
+  --background-secondary: #1e293b; /* slate-800 */
+  --background-tertiary: #334155; /* slate-700 */
+  --border: #475569; /* slate-600 */
+  --muted: #64748b; /* slate-500 */
+  --muted-foreground: #94a3b8; /* slate-400 */
+  --accent: #3b82f6; /* blue-500 */
+  --accent-foreground: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-background-secondary: var(--background-secondary);
+  --color-background-tertiary: var(--background-tertiary);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+/* Light theme override (if you want to support light mode later) */
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #0f172a;
+    --background-secondary: #f8fafc;
+    --background-tertiary: #f1f5f9;
+    --border: #e2e8f0;
+    --muted: #64748b;
+    --muted-foreground: #475569;
+    --accent: #3b82f6;
+    --accent-foreground: #ffffff;
   }
+}
+
+/* Force dark theme for now */
+:root {
+  --background: #0f172a; /* slate-900 */
+  --foreground: #f1f5f9; /* slate-100 */
+  --background-secondary: #1e293b; /* slate-800 */
+  --background-tertiary: #334155; /* slate-700 */
+  --border: #475569; /* slate-600 */
+  --muted: #64748b; /* slate-500 */
+  --muted-foreground: #94a3b8; /* slate-400 */
+  --accent: #3b82f6; /* blue-500 */
+  --accent-foreground: #ffffff;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+/* Ensure consistent background for all main containers */
+#__next,
+html,
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Optional: Add some global utility classes that match your theme */
+.bg-primary {
+  background-color: var(--background);
+}
+
+.bg-secondary {
+  background-color: var(--background-secondary);
+}
+
+.bg-tertiary {
+  background-color: var(--background-tertiary);
+}
+
+.text-primary {
+  color: var(--foreground);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.border-primary {
+  border-color: var(--border);
 }
