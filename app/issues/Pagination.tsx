@@ -14,23 +14,136 @@ export default function Pagination({
   onPageChange,
 }: PaginationProps) {
   const totalPages = Math.ceil(total / perPage);
+  const startItem = (page - 1) * perPage + 1;
+  const endItem = Math.min(page * perPage, total);
+
+  // Generate page numbers to show
+  const getPageNumbers = () => {
+    const delta = 2; // Number of pages to show on each side of current page
+    const range = [];
+    const rangeWithDots = [];
+
+    // Always include first page
+    if (totalPages <= 7) {
+      // If 7 or fewer pages, show all
+      for (let i = 1; i <= totalPages; i++) {
+        range.push(i);
+      }
+    } else {
+      // Complex pagination logic
+      for (
+        let i = Math.max(2, page - delta);
+        i <= Math.min(totalPages - 1, page + delta);
+        i++
+      ) {
+        range.push(i);
+      }
+
+      if (page - delta > 2) {
+        rangeWithDots.push(1, "...");
+      } else {
+        rangeWithDots.push(1);
+      }
+
+      rangeWithDots.push(...range);
+
+      if (page + delta < totalPages - 1) {
+        rangeWithDots.push("...", totalPages);
+      } else if (totalPages > 1) {
+        rangeWithDots.push(totalPages);
+      }
+    }
+
+    return totalPages <= 7 ? range : rangeWithDots;
+  };
+
+  if (totalPages <= 1) return null;
+
   return (
-    <div className="mt-4 flex justify-center gap-4">
-      <button
-        disabled={page === 1}
-        onClick={() => onPageChange(page - 1)}
-        className="px-3 py-1 bg-gray-600 text-white rounded disabled:opacity-50">
-        Prev
-      </button>
-      <span className="text-white">
-        Page {page} of {totalPages}
-      </span>
-      <button
-        disabled={page === totalPages}
-        onClick={() => onPageChange(page + 1)}
-        className="px-3 py-1 bg-gray-600 text-white rounded disabled:opacity-50">
-        Next
-      </button>
+    <div className="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* Results info */}
+        <div className="text-slate-400 text-sm">
+          Showing{" "}
+          <span className="font-medium text-slate-200">{startItem}</span> to{" "}
+          <span className="font-medium text-slate-200">{endItem}</span> of{" "}
+          <span className="font-medium text-slate-200">{total}</span> results
+        </div>
+
+        {/* Pagination controls */}
+        <div className="flex items-center space-x-1">
+          {/* Previous button */}
+          <button
+            disabled={page === 1}
+            onClick={() => onPageChange(page - 1)}
+            className="inline-flex items-center px-3 py-2 text-sm font-medium text-slate-300 
+                     bg-slate-700 border border-slate-600 rounded-lg
+                     hover:bg-slate-600 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-500 
+                     disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-slate-700 
+                     transition-all duration-200">
+            <svg
+              className="w-4 h-4 mr-1"
+              fill="currentColor"
+              viewBox="0 0 20 20">
+              <path
+                fillRule="evenodd"
+                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Previous
+          </button>
+
+          {/* Page numbers */}
+          <div className="hidden sm:flex items-center space-x-1">
+            {getPageNumbers().map((pageNum, index) => (
+              <React.Fragment key={index}>
+                {pageNum === "..." ? (
+                  <span className="px-3 py-2 text-slate-500">...</span>
+                ) : (
+                  <button
+                    onClick={() => onPageChange(pageNum as number)}
+                    className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200
+                              ${
+                                page === pageNum
+                                  ? "bg-blue-600 text-white border-blue-600 shadow-lg"
+                                  : "text-slate-300 bg-slate-700 border-slate-600 hover:bg-slate-600 hover:text-white"
+                              } border focus:z-10 focus:ring-2 focus:ring-blue-500`}>
+                    {pageNum}
+                  </button>
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+
+          {/* Mobile page indicator */}
+          <div className="sm:hidden px-4 py-2 text-sm text-slate-300 bg-slate-700 rounded-lg border border-slate-600">
+            {page} of {totalPages}
+          </div>
+
+          {/* Next button */}
+          <button
+            disabled={page === totalPages}
+            onClick={() => onPageChange(page + 1)}
+            className="inline-flex items-center px-3 py-2 text-sm font-medium text-slate-300 
+                     bg-slate-700 border border-slate-600 rounded-lg
+                     hover:bg-slate-600 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-500 
+                     disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-slate-700 
+                     transition-all duration-200">
+            Next
+            <svg
+              className="w-4 h-4 ml-1"
+              fill="currentColor"
+              viewBox="0 0 20 20">
+              <path
+                fillRule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
