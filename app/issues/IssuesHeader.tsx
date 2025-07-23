@@ -22,7 +22,7 @@ export default function IssuesHeader({ filterStatus, filteredCount }: Props) {
         Issues Dashboard
       </h1>
 
-      <div className="flex flex-wrap items-center gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <div className="flex items-center gap-3">
           <label className="text-sm font-medium text-slate-300">
             Filter by Status:
@@ -37,7 +37,7 @@ export default function IssuesHeader({ filterStatus, filteredCount }: Props) {
           />
         </div>
 
-        <div className="text-sm text-slate-400 bg-slate-700/50 px-3 py-1.5 rounded-full">
+        <div className="text-sm text-slate-400 bg-slate-700/50 px-3 py-1.5 rounded-full w-full sm:w-auto text-center">
           {filteredCount} issue{filteredCount !== 1 ? "s" : ""} found
         </div>
       </div>

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import IssuesHeader from "./IssuesHeader";
 import IssuesTableBody from "./IssuesTableBody";
 import Pagination from "./Pagination";
+import StatusBadge from "./StatusBadge";
 
 export default function IssuesTable({
   initialIssues,
@@ -44,7 +45,7 @@ export default function IssuesTable({
       />
       <div className="bg-slate-800 rounded-xl shadow-2xl border border-slate-700 overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="min-w-full">
+          <table className="min-w-full hidden sm:table">
             <IssuesTableBody
               issues={paginated}
               sortKey={sortKey}
@@ -52,6 +53,20 @@ export default function IssuesTable({
             />
           </table>
         </div>
+      </div>
+
+      <div className="sm:hidden space-y-4">
+        {paginated.map((issue) => (
+          <div
+            key={issue.id}
+            className="bg-slate-800 p-4 rounded-xl shadow border border-slate-700">
+            <div className="text-slate-400 text-sm mb-2">#{issue.id}</div>
+            <div className="text-slate-200 font-semibold mb-1">
+              {issue.title}
+            </div>
+            <StatusBadge status={issue.status} />
+          </div>
+        ))}
       </div>
 
       {filtered.length > perPage && (

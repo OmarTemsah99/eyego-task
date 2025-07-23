@@ -62,7 +62,7 @@ export default function Pagination({
 
   return (
     <div className="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 sm:gap-4">
         {/* Results info */}
         <div className="text-slate-400 text-sm">
           Showing{" "}
@@ -77,7 +77,7 @@ export default function Pagination({
           <button
             disabled={page === 1}
             onClick={() => onPageChange(page - 1)}
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-slate-300 
+            className="inline-flex items-center px-2.5 py-1.5 text-xs sm:text-sm font-medium text-slate-300 
                      bg-slate-700 border border-slate-600 rounded-lg
                      hover:bg-slate-600 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-500 
                      disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-slate-700 
@@ -109,7 +109,7 @@ export default function Pagination({
           </div>
 
           {/* Mobile page indicator */}
-          <div className="sm:hidden px-4 py-2 text-sm text-slate-300 bg-slate-700 rounded-lg border border-slate-600">
+          <div className="sm:hidden px-2.5 py-1.5 text-xs text-slate-300 bg-slate-700 rounded-lg border border-slate-600">
             {page} of {totalPages}
           </div>
 
@@ -117,7 +117,7 @@ export default function Pagination({
           <button
             disabled={page === totalPages}
             onClick={() => onPageChange(page + 1)}
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-slate-300 
+            className="inline-flex items-center px-2.5 py-1.5 text-xs sm:text-sm font-medium text-slate-300 
                      bg-slate-700 border border-slate-600 rounded-lg
                      hover:bg-slate-600 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-500 
                      disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-slate-700 
