@@ -103,7 +103,7 @@ npx prisma generate       # generates client
 <h2>📸 Demo</h2>
 
 <p>
-  <a href="https://drive.google.com/file/d/1WCVShLoFuvfw1kPVX1HYi44whKzlDJiX/view?usp=sharing" target="_blank">
+  <a href="https://drive.google.com/file/d/1F17xpgBD-Bjkaq8Fnu58LWPyeWR0LkLk/view?usp=sharing" target="_blank">
     ▶️ View Project Demo (Google Drive)
   </a>
 </p>
